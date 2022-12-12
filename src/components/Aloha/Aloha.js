@@ -1,6 +1,6 @@
 import React from "react";
 
-class Greeting extends React.Component {
+class Aloha extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -16,14 +16,15 @@ class Greeting extends React.Component {
 
     render() {
         const {isGreeting} = this.state;
+        const {name, lastName} = this.props;
         const greetingText = isGreeting ? 'Hello' : 'Bye';
 
-        return <h1 onClick={() => {this.clickHandler()}}>{greetingText} {this.props.name} from {this.props.country}!</h1>
+        return <h1 onClick={() => {this.clickHandler()}}>{greetingText} {name} {lastName}!</h1>
     }
 
 }
 
-export default Greeting;
+export default Aloha;
 
 /*
 Доробити компоненту таким чином, щоб за натиснення на елемент, текст "Hello ...." змінювався на "Bye!"

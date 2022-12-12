@@ -1,14 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-//import App from './components/App/App';
-import Greeting from './components/Greeting/Greeting';
+import AlohaDashboard from './components/AlohaDashboard/AlohaDashboard';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-    <React.Fragment>
-      <Greeting name="Alex" country="USA" />
-      <Greeting name="John" country="USA" />
-      <Greeting name="Jane" country="GB" />
-      <Greeting name="Masha" country="Ukraine" />
-    </React.Fragment>
+    <AlohaDashboard />
 );

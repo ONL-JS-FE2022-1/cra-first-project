@@ -1,3 +1,21 @@
+function ToDoItem(props) {
+
+    const clickHandler = () => {
+        const {delCallback, key} = props;
+        delCallback(key);
+    }
+
+    const {key} = props;
+    return (
+        <li key={key}>
+            {props.text}
+            <button onClick={() => {clickHandler()}}>X</button>
+        </li>
+    )
+}
+
+export default ToDoItem;
+
 /*
 function компонента для Айтема (лі з текстом + кнопкою)
 За натисненням на кнопку лі зникає з екрану

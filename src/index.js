@@ -1,8 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import ToDoList from './components/ToDoList/ToDoList'
+import UserList from './components/UsersList/UserList';
+
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-    <ToDoList />
+    <UserList />
 );

@@ -1,6 +1,7 @@
 import React from "react";
 import {getUsers} from '../../api/';
 import UserCard from "./UserCard";
+import './style.css'
 
 class UserList extends React.Component {
     constructor(props) {
@@ -17,17 +18,25 @@ class UserList extends React.Component {
             this.setState({
                 users: results
             })
+            console.log(results);
         });
+    }
+
+    renderUsers = () => {
+        const {users} = this.state;
+        return users.map((user) => <UserCard user={user}/>)
     }
 
     render() {
         const {users} = this.state;
         return(
             <>
-            <ul>
-            <h1>Hello</h1>
-            {users.length ? <UserCard user={users[0]} /> : <h2>Пользователи еще не загрузились!</h2>}
-            </ul>
+            
+            <h1>USERS</h1>
+            <section className="card-container">
+                {users.length ? this.renderUsers() : <h2>Пользователи еще не загрузились!</h2>}
+            </section>
+            
             </>
         )
     }

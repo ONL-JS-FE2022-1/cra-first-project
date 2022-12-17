@@ -8,7 +8,8 @@ class UserList extends React.Component {
         super(props);
 
         this.state = {
-            users: []
+            users: [],
+            filteredUsers: []
         }
     }
 
@@ -22,9 +23,36 @@ class UserList extends React.Component {
         });
     }
 
+    handleSearch = (event) => {
+        // 1
+        // якщо в інпутику нічого немає, то чистимо масив відфільтрованих юзерів
+        if(event.target.value === "") {
+            this.setState({
+                filteredUsers: []
+            })
+            return;
+        }
+
+        // 2
+        // Фільтруємо по прізвищу
+        const searchValue = event.target.value; 
+        const filteredUsers = this.state.users.filter(
+            (user) => 
+            {return user.name.last.toLowerCase().indexOf(searchValue.toLowerCase()) !== -1}
+        );
+
+        // 3
+        // кладемо в стейт відфільтрованих юзерів
+        this.setState({
+            filteredUsers: filteredUsers
+        })
+    }
+
     renderUsers = () => {
-        const {users} = this.state;
-        return users.map((user) => <UserCard user={user}/>)
+        const {users, filteredUsers} = this.state;
+        return filteredUsers.length > 0 
+        ? filteredUsers.map((user) => <UserCard user={user}/>) 
+        : users.map((user) => <UserCard user={user}/>)
     }
 
     render() {
@@ -33,6 +61,14 @@ class UserList extends React.Component {
             <>
             
             <h1>USERS</h1>
+
+            <input 
+            type="text"
+            autoComplete="off"
+            placeholder="Поиск юзера по фамилии"
+            onChange={this.handleSearch}
+            />
+
             <section className="card-container">
                 {users.length ? this.renderUsers() : <h2>Пользователи еще не загрузились!</h2>}
             </section>

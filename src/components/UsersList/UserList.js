@@ -9,17 +9,17 @@ class UserList extends React.Component {
 
         this.state = {
             users: [],
-            filteredUsers: []
+            filteredUsers: [],
+            userCount: 100
         }
     }
 
     componentDidMount() {
-        getUsers().then((data) => {
+        getUsers(this.state.userCount).then((data) => {
             const {results} = data;
             this.setState({
                 users: results
             })
-            console.log(results);
         });
     }
 
@@ -48,11 +48,26 @@ class UserList extends React.Component {
         })
     }
 
+    setUserCount = (event) => {
+        this.setState({
+            userCount: event.target.value
+        })
+    }
+
+    loadUsers = () => {
+        getUsers(this.state.userCount).then((data) => {
+            const {results} = data;
+            this.setState({
+                users: results
+            })
+        });
+    }
+
     renderUsers = () => {
         const {users, filteredUsers} = this.state;
         return filteredUsers.length > 0 
-        ? filteredUsers.map((user) => <UserCard user={user}/>) 
-        : users.map((user) => <UserCard user={user}/>)
+        ? filteredUsers.map((user) => <UserCard key={user.login.uuid} user={user}/>) 
+        : users.map((user) => <UserCard key={user.login.uuid} user={user}/>)
     }
 
     render() {
@@ -61,6 +76,14 @@ class UserList extends React.Component {
             <>
             
             <h1>USERS</h1>
+
+            <input 
+            type="number"
+            min={1}
+            max={100}
+            onChange={this.setUserCount}
+            />
+            <button onClick={this.loadUsers}>Загрузить юзеров</button>
 
             <input 
             type="text"

@@ -1,5 +1,6 @@
 import React from "react";
 import ToDoItem from "./ToDoItem";
+import ToDoForm from "./ToDoForm";
 
 class ToDoList extends React.Component {
     constructor(props) {
@@ -50,11 +51,28 @@ class ToDoList extends React.Component {
         //     </li>)
     }
 
+    formHandler = (text) => {
+        const {todoList} = this.state;
+        const newObj = {
+            id: Date.now(),
+            text
+        }
+
+        const newArr = [...todoList, newObj];
+
+        this.setState({
+            todoList: newArr
+        })
+    }
+
     render() {
         return(
+            <>
+            <ToDoForm sendData={this.formHandler} />
             <ul>
                 {this.renderLi()}
             </ul>
+            </>
         )
     }
 }

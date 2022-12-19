@@ -1,9 +1,9 @@
-import UserList from "./UsersList/UserList";
+import HelloParent from "./HelloForm/HelloParent";
 
 
 function App() {
     return(
-        <UserList />
+        <HelloParent />
     )
 }
 

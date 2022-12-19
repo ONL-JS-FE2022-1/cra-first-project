@@ -8,15 +8,23 @@ class ToDoForm extends Component {
         super(props);
         this.state = {
             // 3. Нам потрібен стейт
-            todo: ''
+            todo: '',
+            isInputValid: true
         }
     }
     
     // 2. onChange : input -> state
     changeHandler = ({target: {value, name}}) => {
-        this.setState({
-            [name]: value
-        })
+        if(value.includes('*')) {
+            this.setState({
+                isInputValid: false
+            })
+        } else {
+            this.setState({
+                [name]: value,
+                isInputValid: true
+            })
+        }
     }
 
     submitHandler = (event) => {
@@ -25,7 +33,14 @@ class ToDoForm extends Component {
     }
 
     render() {
-        const {todo} = this.state;
+        const {todo, isInputValid} = this.state;
+
+        cx({
+            [styles.input]: true,
+            [styles['invalid-input']]: !isInputValid
+        })
+
+        // const className = styles['input'] + ' ' + (isInputValid ? '' : styles['invalid-input']);
         return (
             <form onSubmit={this.submitHandler} className={styles.container}>
                 <input
@@ -33,6 +48,7 @@ class ToDoForm extends Component {
                 name="todo"
                 value={todo}
                 onChange={this.changeHandler}
+                //className={className}
                 />
                 <button type="submit">Submit</button>
                 {/* 
@@ -48,3 +64,24 @@ export default ToDoForm;
 
 
 // [name].module.css
+
+
+
+function cx (objectClassNames) {
+    const cort = Object.entries(objectClassNames);
+    const filtered = cort.filter((className, condition) => condition);
+    const arr = filtered.map((className, condition) => className);
+    arr.join(' ');
+} // 'className1 className2'
+
+/*
+objectClassNames = {
+    className1: true,
+    className2: true,
+    className4: false,
+}
+*/
+
+// [[className1, true], [className2, true], [className4, false]] ->
+// [[className1, true], [className2, true]] -> [className1, className2] -> 'className1 className2'
+

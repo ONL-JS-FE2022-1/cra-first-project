@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 // import './style.css';
 import styles from './ToDoFormStyle.module.css';
+import cx from 'classnames';
 
 
 class ToDoForm extends Component {
@@ -35,7 +36,7 @@ class ToDoForm extends Component {
     render() {
         const {todo, isInputValid} = this.state;
 
-        cx({
+        const cNameString = cx({
             [styles.input]: true,
             [styles['invalid-input']]: !isInputValid
         })
@@ -48,7 +49,7 @@ class ToDoForm extends Component {
                 name="todo"
                 value={todo}
                 onChange={this.changeHandler}
-                //className={className}
+                className={cNameString}
                 />
                 <button type="submit">Submit</button>
                 {/* 
@@ -64,24 +65,4 @@ export default ToDoForm;
 
 
 // [name].module.css
-
-
-
-function cx (objectClassNames) {
-    const cort = Object.entries(objectClassNames);
-    const filtered = cort.filter((className, condition) => condition);
-    const arr = filtered.map((className, condition) => className);
-    arr.join(' ');
-} // 'className1 className2'
-
-/*
-objectClassNames = {
-    className1: true,
-    className2: true,
-    className4: false,
-}
-*/
-
-// [[className1, true], [className2, true], [className4, false]] ->
-// [[className1, true], [className2, true]] -> [className1, className2] -> 'className1 className2'
 

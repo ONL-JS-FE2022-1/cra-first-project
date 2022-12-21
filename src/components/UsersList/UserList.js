@@ -10,17 +10,23 @@ class UserList extends React.Component {
         this.state = {
             users: [],
             filteredUsers: [],
-            userCount: 100
+            userCount: 15,
+            page: 1,
+            isLoading: true,
+            isError: false
         }
     }
 
     componentDidMount() {
-        getUsers(this.state.userCount).then((data) => {
-            const {results} = data;
-            this.setState({
-                users: results
-            })
-        });
+        const {userCount, page} = this.state;
+        this.loadUsers(userCount, page);
+    }
+
+    componentDidUpdate(prevProps, prevState) {
+        const {userCount, page} = this.state;
+        if(prevState.page !== page) {
+            this.loadUsers(userCount, page);
+        }
     }
 
     handleSearch = (event) => {
@@ -54,13 +60,36 @@ class UserList extends React.Component {
         })
     }
 
-    loadUsers = () => {
-        getUsers(this.state.userCount).then((data) => {
+    prevBtnHandler = () => {
+        this.setState({
+            page: this.state.page > 1 ? this.state.page - 1 : this.state.page
+        })
+    }
+
+    nextBtnHandler = () => {
+        this.setState({
+            page: this.state.page + 1
+        })
+    }
+
+    loadUsers = (userCount, page) => {
+        getUsers(userCount, page).then((data) => {
             const {results} = data;
             this.setState({
                 users: results
             })
-        });
+        })
+        .catch((error) => {
+            this.setState({
+                isError: true
+            })
+        })
+        .finally(() => {
+            this.setState({
+                isLoading: false
+            })
+        })
+        ;
     }
 
     renderUsers = () => {
@@ -71,7 +100,7 @@ class UserList extends React.Component {
     }
 
     render() {
-        const {users} = this.state;
+        const {users, isError, isLoading} = this.state;
         return(
             <>
             
@@ -91,9 +120,13 @@ class UserList extends React.Component {
             placeholder="Поиск юзера по фамилии"
             onChange={this.handleSearch}
             />
+            <button onClick={this.prevBtnHandler}>Previous page</button>
+            <button onClick={this.nextBtnHandler}>Next page</button>
 
+            {isError && <h2>Произошла ошибка!</h2>}
+            {isLoading && <h2>Пользователи еще не загрузились!</h2>}
             <section className="card-container">
-                {users.length ? this.renderUsers() : <h2>Пользователи еще не загрузились!</h2>}
+                {users.length ? this.renderUsers() : null}
             </section>
             
             </>

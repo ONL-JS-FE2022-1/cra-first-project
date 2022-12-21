@@ -1,16 +1,24 @@
-import React, { Component } from 'react';
-import Child from './Child';
+import React from 'react';
 
-class List extends Component {
-    render() {
-        return (
-            <Child >
-                <h1>Header</h1>
-                <p>Hello, Child!</p>
-            </Child>
-        );
+const FlexContainer = (props) => {
+    const {flexDirection, alignItems, justifyContent, backgroundColor} = props;
+
+    const inlineStyles = {
+        display: 'flex',
+        flexDirection,
+        alignItems,
+        justifyContent,
+        backgroundColor
     }
+
+    return (
+        <div style={inlineStyles}>
+            {props.children}
+        </div>
+    );
 }
+
+export default FlexContainer;
 
 
 /* 
@@ -28,5 +36,3 @@ style = {
     someProp: value1
 }
 */
-
-export default List;

@@ -1,7 +1,10 @@
-import UserList from './UsersList/UserList'
+
 function App() {
     return(
-        <UserList />
+        <>
+        <button onClick={() => {window.close()}}>Close</button>
+        <button onClick={() => {window.open('https://randomuser.me/documentation#pagination')}}>Open</button>
+        </>
     )
 }
 

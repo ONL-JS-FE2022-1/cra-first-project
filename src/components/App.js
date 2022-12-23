@@ -1,55 +1,30 @@
-import DataProvider from "./DataProvider";
+import React from "react";
+import Tree from "./Tree";
+import {MyContext} from '../contexts/userContext'
 
-function App() {
-  return (
-    <>
-      <DataProvider
-        loadData={() => {
-          return fetch("./phones.json").then((response) => response.json());
-        }}
-      >
-        {(state) => {
-          const { data, isLoading, isError } = state;
-          return (
-            <>
-              {isLoading && <div>Loading...</div>}
-              {isError && <div>Error happening!</div>}
-              <ul>
-                {data.map((data, index) => (
-                  <li key={index}>
-                    {data.brand} - {data.model}. Price: {data.price}
-                  </li>
-                ))}
-              </ul>
-            </>
-          );
-        }}
-      </DataProvider>
-
-      <DataProvider
-        loadData={() => {
-          return fetch("./tv.json").then((response) => response.json());
-        }}
-      >
-        {(state) => {
-          const { data, isLoading, isError } = state;
-          return (
-            <>
-              {isLoading && <div>Loading...</div>}
-              {isError && <div>Error happening!</div>}
-              <ul>
-                {data.map((data, index) => (
-                  <li key={index}>
-                    АКЦІЯ!!! {data.brand} - {data.model}. Price: {data.price}
-                  </li>
-                ))}
-              </ul>
-            </>
-          );
-        }}
-      </DataProvider>
-    </>
-  );
+class App extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      user: {
+        firstName: "John",
+        lastName: "Doe",
+        email: "johndoe@mail.com",
+        avatar: "https://robohash.org/John%20Doe",
+      },
+    };
+  }
+  render() {
+    console.log(MyContext)
+    return (
+      <>
+        App
+        <MyContext.Provider value={this.state.user}>
+          <Tree />
+        </MyContext.Provider>
+      </>
+    );
+  }
 }
 
 export default App;

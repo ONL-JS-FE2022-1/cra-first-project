@@ -1,9 +1,9 @@
 import React from "react";
-import { MyContext } from "../../../../../../contexts/userContext";
+import { UserContext } from "../../../../../../contexts/userContext";
 
 const Innerchild = () => {
   return (
-    <MyContext.Consumer>
+    <UserContext.Consumer>
       {({ user, logOut }) => {
         return (
           <>
@@ -15,7 +15,7 @@ const Innerchild = () => {
           </>
         );
       }}
-    </MyContext.Consumer>
+    </UserContext.Consumer>
   );
 };
 

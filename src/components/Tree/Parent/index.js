@@ -1,12 +1,12 @@
 import React from 'react';
-import Subparent from './Subparent';
+import SubparentWithTheme from './Subparent';
 
 const Parent = (props) => {
     return (
         <div>
             <div style={{border: '3px solid black', padding: '25px'}}>
             Parent
-            <Subparent />
+            <SubparentWithTheme />
         </div>
         </div>
     );

@@ -1,13 +1,5 @@
 import React, { Component } from 'react';
-import * as yup from 'yup';
-
-const SCHEMA = yup.object({
-    firstName: yup.string().min(1).max(30),
-    lastName: yup.string().min(1).max(30),
-    email: yup.string().required().email(),
-    pass: 
-    yup.string().required().matches(/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$ %^&*-]).{8,}$/)
-})
+import { SCHEMA } from '../../schemas';
 
 const initialState = {
             firstName: '',
@@ -20,7 +12,8 @@ class SignUpForm extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            ...initialState
+            ...initialState,
+            isError: null
         }
     }
     
@@ -32,11 +25,19 @@ class SignUpForm extends Component {
 
     submitHandler = (event) => {
         event.preventDefault();
-        console.log(SCHEMA.isValidSync(this.state));
+
+        try {
+            SCHEMA.validateSync(this.state);
+        } catch (e) {
+            this.setState({
+                isError: e
+            })
+        }
+
     }
 
     render() {
-        const {email, pass, firstName, lastName} = this.state;
+        const {email, pass, firstName, lastName, isError} = this.state;
         return (
             <form onSubmit={this.submitHandler}>
                 <input name="firstName" type="text" value={firstName} onChange={this.changeHandler} placeholder="firstName" />
@@ -44,6 +45,7 @@ class SignUpForm extends Component {
                 <input name="email" type="text" value={email} onChange={this.changeHandler} placeholder="email" />
                 <input name="pass" type="text" value={pass} onChange={this.changeHandler} placeholder="pass" />
                 <button>Submit</button>
+                {isError && <p style={{color: 'red', fontSize: '20px', fontWeight: 'bold'}}>{isError.message}</p>}
             </form>
         );
     }

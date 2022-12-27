@@ -1,8 +1,7 @@
 import React from 'react';
 import Child from './Child';
-import { withTheme } from '../../../../HOC';
+import { withTheme, withUser } from '../../../../HOC';
 import CONSTANTS from '../../../../constants';
-import { UserContext } from '../../../../contexts/userContext';
 const {THEMES} = CONSTANTS
 
 const Subparent = (props) => {
@@ -19,17 +18,10 @@ const Subparent = (props) => {
     );
 }
 
-const SubparentWithTheme = (props) => {
-    return (
-        <UserContext.Consumer>
-            {({user, logOut}) => {
-                const SubparentThemed = withTheme(Subparent);
-                return (
-                    <SubparentThemed user={user} logOut={logOut} />
-                )
-            }}
-        </UserContext.Consumer>
-    )
-}
+// const SubparentWithTheme = withTheme(Subparent);
 
-export default SubparentWithTheme;
+// const SubparentWithThemeWithUser = withUser(SubparentWithTheme);
+
+// export default SubparentWithThemeWithUser;
+
+export default withUser(withTheme(Subparent));

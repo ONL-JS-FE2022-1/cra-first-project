@@ -4,8 +4,9 @@ const MouseTracker = (props) => {
     const [coordinates, setCoordinates] = useState({
         x: 0,
         y: 0,
-        counter: 0
     })
+
+    const [counter, setCounter] = useState(0);
 
     useEffect(() => {
         window.addEventListener('mousemove', tracker);
@@ -15,29 +16,21 @@ const MouseTracker = (props) => {
     }, []);
 
     const tracker = (event) => {
-        setCoordinates((prevState) => {
-            return {
-                ...prevState,
+        setCoordinates({
                 x: event.clientX,
                 y: event.clientY
-            }
         })
     }
 
     const clickHandler = () => {
-        setCoordinates((prevState) => {
-            return {
-                ...prevState,
-                counter: prevState.counter + 1
-            }
-        })
+        setCounter(counter + 1);
     }
 
     return (
         <div onClick={clickHandler}>
             <p>X: {coordinates.x}</p>
             <p>Y: {coordinates.y}</p>
-            <p>Counter: {coordinates.counter}</p>
+            <p>Counter: {counter}</p>
         </div>
     );
 }

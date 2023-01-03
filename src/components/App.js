@@ -1,12 +1,13 @@
 import React from "react";
-import Counter from './Counter/CounterPage'
+import Clicker from "./SandboxComponent";
+
 
 class App extends React.Component {
   
   render() {
     
     return (
-      <Counter />
+      <Clicker />
     );
   }
 }

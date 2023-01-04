@@ -1,65 +1,38 @@
-import React, {useReducer, useState} from "react";
-
-/*
-Reducer - чиста функція!!!
-
-1. Не лізе в оточуючий світ (не запускає побічних ефектів)
-2. При одних і тих самих вхідних даних поквертає один і той самий результат
-
-Ця функція не має мутувати state, натомість вона повертає НОВИЙ ОБ'ЄКТ стану
-*/
-
-function reducer(state, action) {
-    switch(action.type) {
-        case 'CLICK_INCREMENT': {
-            return {
-                ...state,
-                click: state.click + 1
-            }
-        }
-        default: return state;
-    }
-}
+import React, {useReducer} from "react";
+import {reducer} from '../../reducers';
+import CONSTANTS from "../../constants";
+const {ACTIONS} = CONSTANTS;
 
 const initialState = {
-    click: 0
+    firstName: '',
+    lastName: '',
+    email: '',
+    password: '',
+    address: ''
 }
 
 function SignOutForm (props) {
 
     const [state, dispatch] = useReducer(reducer, initialState);
 
-    const clicker = () => {
+    const changeHandler = ({target: {value, name}}) => {
         dispatch({
-            type: 'CLICK_INCREMENT'
+            type: ACTIONS.INPUT_CHANGE,
+            name,
+            value
         })
     }
 
-
-    const [firstName, setFirstName] = useState('');
-    const [lastName, setLastName] = useState('');
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-    const [address, setAddress] = useState('');
-
     
-
+    const {firstName, lastName, email, password, address} = state;
     return (
-        <>
-        {state.click}
-        <button onClick={clicker}>Click to increment!</button>
-        
-        {/*
         <form>
-            <input type="text" name="firstName" value={firstName}  />
-            <input type="text" name="lastName" value={lastName}  />
-            <input type="text" name="email" value={email}  />
-            <input type="text" name="password" value={password}  />
-            <input type="text" name="address" value={address}  />
+            <input type="text" name="firstName" value={firstName} onChange={changeHandler} />
+            <input type="text" name="lastName" value={lastName} onChange={changeHandler} />
+            <input type="text" name="email" value={email} onChange={changeHandler} />
+            <input type="text" name="password" value={password} onChange={changeHandler} />
+            <input type="text" name="address" value={address} onChange={changeHandler} />
         </form>
-    */}
-
-    </>
     )
 }
 

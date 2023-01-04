@@ -1,15 +1,17 @@
 import React from "react";
-import PhoneLoader from "./PhoneLoader";
+import useMouseTracker from "./MouseTracker";
 
 
-class App extends React.Component {
-  
-  render() {
+function App (props) {
+  const {coordinates} = useMouseTracker()
     
     return (
-      <PhoneLoader />
+      <section>
+        <p>X: {coordinates.x}</p>
+        <p>Y: {coordinates.y}</p>
+      </section>
     );
-  }
+  
 }
 
 export default App;
